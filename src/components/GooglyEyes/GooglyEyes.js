@@ -5,14 +5,13 @@ class GooglyEyes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pupilX: this.props.eyeSize / 2,
-      pupilY: this.props.eyeSize / 2,
+      circleX: null,
+      circleY: null,
       size: {}
     };
   }
 
   refCallback = element => {
-    console.log("refCallback");
     if (element) {
       let size = element.getBoundingClientRect();
       let circleY = (size.top + size.bottom) / 2;
@@ -24,8 +23,8 @@ class GooglyEyes extends Component {
   getPupilLoc = () => {
     const { eyeSize, mouseX, mouseY } = this.props;
     const { circleX, circleY } = this.state;
-    let pupilX = this.state.pupilX;
-    let pupilY = this.state.pupilY;
+    let pupilX = 80;
+    let pupilY = 80;
     let distanceToMouse = Math.sqrt(
       Math.pow(mouseX - circleX, 2) + Math.pow(mouseY - circleY, 2)
     );
@@ -33,29 +32,24 @@ class GooglyEyes extends Component {
     if (distanceToMouse < 0.15625 * eyeSize) {
       pupilX = mouseX - circleX + eyeSize / 2;
       pupilY = mouseY - circleY + eyeSize / 2;
-    } else if (mouseX < circleX && mouseY < circleY) {
+    } else if (mouseX < circleX) {
       pupilX = 0.5 * eyeSize - 0.15625 * eyeSize * Math.cos(angle);
       pupilY = 0.5 * eyeSize - 0.15625 * eyeSize * Math.sin(angle);
-    } else if (mouseX > circleX && mouseY < circleY) {
-      pupilX = 0.5 * eyeSize + 0.15625 * eyeSize * Math.cos(angle);
-      pupilY = 0.5 * eyeSize + 0.15625 * eyeSize * Math.sin(angle);
-    } else if (mouseX < circleX && mouseY > circleY) {
-      pupilX = 0.5 * eyeSize - 0.15625 * eyeSize * Math.cos(angle);
-      pupilY = 0.5 * eyeSize - 0.15625 * eyeSize * Math.sin(angle);
-    } else if (mouseX > circleX && mouseY > circleY) {
+    } else if (mouseX > circleX) {
       pupilX = 0.5 * eyeSize + 0.15625 * eyeSize * Math.cos(angle);
       pupilY = 0.5 * eyeSize + 0.15625 * eyeSize * Math.sin(angle);
     }
-    // this.setState({ pupilX, pupilY });
     return { pupilX, pupilY };
   };
 
   render() {
+    const { eyeSize } = this.props;
     return (
       <svg
-        width={this.props.eyeSize}
-        height={this.props.eyeSize}
+        width={eyeSize}
+        height={eyeSize}
         ref={this.refCallback}
+        className="GooglyEyes"
       >
         <defs>
           <filter id="GooglyEyess">
@@ -72,56 +66,53 @@ class GooglyEyes extends Component {
           </filter>
         </defs>
         <circle
-          cx={0.09375 * this.props.eyeSize}
-          cy={this.props.eyeSize / 2}
-          r={0.09375 * this.props.eyeSize}
-          strokeWidth={0.0625 * this.props.eyeSize}
+          cx={0.09375 * eyeSize}
+          cy={eyeSize / 2}
+          r={0.09375 * eyeSize}
+          strokeWidth={0.0625 * eyeSize}
           stroke="#aaaaaa"
         />
         <circle
-          cx={0.90625 * this.props.eyeSize}
-          cy={this.props.eyeSize / 2}
-          r={0.09375 * this.props.eyeSize}
-          strokeWidth={0.0625 * this.props.eyeSize}
+          cx={0.90625 * eyeSize}
+          cy={eyeSize / 2}
+          r={0.09375 * eyeSize}
+          strokeWidth={0.0625 * eyeSize}
           stroke="#aaaaaa"
         />
         <circle
-          cx={this.props.eyeSize / 2}
-          cy={0.90625 * this.props.eyeSize}
-          r={0.09375 * this.props.eyeSize}
-          strokeWidth={0.0625 * this.props.eyeSize}
+          cx={eyeSize / 2}
+          cy={0.90625 * eyeSize}
+          r={0.09375 * eyeSize}
+          strokeWidth={0.0625 * eyeSize}
           stroke="#aaaaaa"
         />
         <circle
-          cx={this.props.eyeSize / 2}
-          cy={0.09375 * this.props.eyeSize}
-          r={0.09375 * this.props.eyeSize}
-          strokeWidth={0.0625 * this.props.eyeSize}
+          cx={eyeSize / 2}
+          cy={0.09375 * eyeSize}
+          r={0.09375 * eyeSize}
+          strokeWidth={0.0625 * eyeSize}
           stroke="#aaaaaa"
         />
         <circle
-          cx={this.props.eyeSize / 2}
-          cy={this.props.eyeSize / 2}
-          r={0.3125 * this.props.eyeSize}
+          cx={eyeSize / 2}
+          cy={eyeSize / 2}
+          r={0.3125 * eyeSize}
           strokeWidth="1"
           stroke="#cccccc"
         />
         <circle
-          className="GooglyEyes"
-          cx={this.props.eyeSize / 2}
-          cy={this.props.eyeSize / 2}
-          r={0.3125 * this.props.eyeSize}
+          cx={eyeSize / 2}
+          cy={eyeSize / 2}
+          r={0.3125 * eyeSize}
           fill="#ffffff"
           filter="url(#GooglyEyess)"
         />
         <circle
-          className="GooglyEyes"
           cx={this.getPupilLoc().pupilX}
           cy={this.getPupilLoc().pupilY}
-          r={0.15625 * this.props.eyeSize}
+          r={0.15625 * eyeSize}
           fill="#222222"
         />
-        {/* <circle className="GooglyEyes" cx={this.props.eyeSize/2} cy={this.props.eyeSize/2} r="26" fill="#222222" /> */}
       </svg>
     );
   }

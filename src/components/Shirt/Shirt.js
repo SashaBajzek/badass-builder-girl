@@ -6,55 +6,39 @@ class Shirt extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eyeSize: 160,
+      eyeSize: 100,
       mouseX: 0,
       mouseY: 0
     };
   }
 
-  updateLight = event => {
+  trackMouse = event => {
     this.setState({ mouseX: event.clientX, mouseY: event.clientY });
-    console.log("mouseX", this.state.mouseX);
-    console.log("mouseY", this.state.mouseY);
   };
 
   componentWillMount() {
-    window.addEventListener("mousemove", this.updateLight);
+    window.addEventListener("mousemove", this.trackMouse);
   }
 
   render() {
+    const { eyeSize, mouseX, mouseY } = this.state;
     return (
       <div className="Shirt">
-        <GooglyEyes
-          eyeSize={this.state.eyeSize}
-          mouseX={this.state.mouseX}
-          mouseY={this.state.mouseY}
-        />
-        <GooglyEyes
-          eyeSize={this.state.eyeSize}
-          mouseX={this.state.mouseX}
-          mouseY={this.state.mouseY}
-        />
-        <GooglyEyes
-          eyeSize={this.state.eyeSize}
-          mouseX={this.state.mouseX}
-          mouseY={this.state.mouseY}
-        />
-        <GooglyEyes
-          eyeSize={this.state.eyeSize}
-          mouseX={this.state.mouseX}
-          mouseY={this.state.mouseY}
-        />
-        <GooglyEyes
-          eyeSize={this.state.eyeSize}
-          mouseX={this.state.mouseX}
-          mouseY={this.state.mouseY}
-        />
-        <GooglyEyes
-          eyeSize={this.state.eyeSize}
-          mouseX={this.state.mouseX}
-          mouseY={this.state.mouseY}
-        />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
+        <GooglyEyes eyeSize={eyeSize} mouseX={mouseX} mouseY={mouseY} />
       </div>
     );
   }
