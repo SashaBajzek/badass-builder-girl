@@ -20,8 +20,8 @@ class GooglyEyes extends Component {
     }
   };
 
-  getPupilLoc = () => {
-    const { eyeSize, mouseX, mouseY } = this.props;
+  getPupilLoc = (mouseX, mouseY) => {
+    const { eyeSize } = this.props;
     const { circleX, circleY } = this.state;
     let pupilX = 80;
     let pupilY = 80;
@@ -42,8 +42,25 @@ class GooglyEyes extends Component {
     return { pupilX, pupilY };
   };
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   let prevLocation = this.getPupilLoc(this.props.mouseX, this.props.mouseY);
+  //   let nextLocation = this.getPupilLoc(nextProps.mouseX, nextProps.mouseY);
+  //   let diff = Math.abs(
+  //     Math.sqrt(
+  //       Math.pow(prevLocation.pupilX - nextLocation.pupilX, 2) +
+  //         Math.pow(prevLocation.pupilY - nextLocation.pupilY, 2)
+  //     )
+  //   );
+  //   console.log("diff", diff);
+  //   if (diff > 0.25) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
   render() {
-    const { eyeSize } = this.props;
+    const { eyeSize, mouseX, mouseY } = this.props;
     return (
       <svg
         width={eyeSize}
@@ -108,8 +125,8 @@ class GooglyEyes extends Component {
           filter="url(#GooglyEyess)"
         />
         <circle
-          cx={this.getPupilLoc().pupilX}
-          cy={this.getPupilLoc().pupilY}
+          cx={this.getPupilLoc(mouseX, mouseY).pupilX}
+          cy={this.getPupilLoc(mouseX, mouseY).pupilY}
           r={0.15625 * eyeSize}
           fill="#222222"
         />
