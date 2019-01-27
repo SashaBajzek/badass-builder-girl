@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "./Shirt.scss";
-import GoogleEyes from "../GoogleEyes/GoogleEyes";
+import GooglyEyes from "../GooglyEyes/GooglyEyes";
 
 class Shirt extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      eyeSize: 100,
       mouseX: 0,
       mouseY: 0
     };
@@ -24,8 +25,36 @@ class Shirt extends Component {
   render() {
     return (
       <div className="Shirt">
-        <GoogleEyes mouseX={this.state.mouseX} mouseY={this.state.mouseY} />
-        <GoogleEyes mouseX={this.state.mouseX} mouseY={this.state.mouseY} />
+        <GooglyEyes
+          eyeSize={this.state.eyeSize}
+          mouseX={this.state.mouseX}
+          mouseY={this.state.mouseY}
+        />
+        <GooglyEyes
+          eyeSize={this.state.eyeSize}
+          mouseX={this.state.mouseX}
+          mouseY={this.state.mouseY}
+        />
+        <GooglyEyes
+          eyeSize={this.state.eyeSize}
+          mouseX={this.state.mouseX}
+          mouseY={this.state.mouseY}
+        />
+        <GooglyEyes
+          eyeSize={this.state.eyeSize}
+          mouseX={this.state.mouseX}
+          mouseY={this.state.mouseY}
+        />
+        <GooglyEyes
+          eyeSize={this.state.eyeSize}
+          mouseX={this.state.mouseX}
+          mouseY={this.state.mouseY}
+        />
+        <GooglyEyes
+          eyeSize={this.state.eyeSize}
+          mouseX={this.state.mouseX}
+          mouseY={this.state.mouseY}
+        />
       </div>
     );
   }
