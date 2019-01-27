@@ -29,10 +29,10 @@ class GooglyEyes extends Component {
       Math.pow(mouseX - circleX, 2) + Math.pow(mouseY - circleY, 2)
     );
     let angle = Math.atan((circleY - mouseY) / (circleX - mouseX));
-    if (distanceToMouse < 0.15625 * eyeSize) {
+    if (distanceToMouse <= 0.15625 * eyeSize) {
       pupilX = mouseX - circleX + eyeSize / 2;
       pupilY = mouseY - circleY + eyeSize / 2;
-    } else if (mouseX < circleX) {
+    } else if (mouseX <= circleX) {
       pupilX = 0.5 * eyeSize - 0.15625 * eyeSize * Math.cos(angle);
       pupilY = 0.5 * eyeSize - 0.15625 * eyeSize * Math.sin(angle);
     } else if (mouseX > circleX) {
