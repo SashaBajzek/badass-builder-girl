@@ -22,44 +22,32 @@ class GooglyEyes extends Component {
   };
 
   getPupilLoc = () => {
-    const { mouseX, mouseY } = this.props;
-    let pupilX = this.props.eyeSize / 2;
-    let pupilY = this.props.eyeSize / 2;
+    const { eyeSize, mouseX, mouseY } = this.props;
+    const { circleX, circleY } = this.state;
+    let pupilX = this.state.pupilX;
+    let pupilY = this.state.pupilY;
+    let distanceToMouse = Math.sqrt(
+      Math.pow(mouseX - circleX, 2) + Math.pow(mouseY - circleY, 2)
+    );
+    let angle = Math.atan((circleY - mouseY) / (circleX - mouseX));
+    if (distanceToMouse < 0.15625 * eyeSize) {
+      pupilX = mouseX - circleX + eyeSize / 2;
+      pupilY = mouseY - circleY + eyeSize / 2;
+    } else if (mouseX < circleX && mouseY < circleY) {
+      pupilX = 0.5 * eyeSize - 0.15625 * eyeSize * Math.cos(angle);
+      pupilY = 0.5 * eyeSize - 0.15625 * eyeSize * Math.sin(angle);
+    } else if (mouseX > circleX && mouseY < circleY) {
+      pupilX = 0.5 * eyeSize + 0.15625 * eyeSize * Math.cos(angle);
+      pupilY = 0.5 * eyeSize + 0.15625 * eyeSize * Math.sin(angle);
+    } else if (mouseX < circleX && mouseY > circleY) {
+      pupilX = 0.5 * eyeSize - 0.15625 * eyeSize * Math.cos(angle);
+      pupilY = 0.5 * eyeSize - 0.15625 * eyeSize * Math.sin(angle);
+    } else if (mouseX > circleX && mouseY > circleY) {
+      pupilX = 0.5 * eyeSize + 0.15625 * eyeSize * Math.cos(angle);
+      pupilY = 0.5 * eyeSize + 0.15625 * eyeSize * Math.sin(angle);
+    }
+    // this.setState({ pupilX, pupilY });
     return { pupilX, pupilY };
-  };
-
-  getPupilX = () => {
-    console.log("circleX", this.state.circleX);
-    let pupilX = this.props.eyeSize / 2;
-    if (this.props.mouseX > this.state.circleX + 0.15625 * this.props.eyeSize) {
-      pupilX = this.props.eyeSize / 2 + 0.15625 * this.props.eyeSize;
-    } else if (
-      this.props.mouseX <
-      this.state.circleX - 0.15625 * this.props.eyeSize
-    ) {
-      pupilX = this.props.eyeSize / 2 - 0.15625 * this.props.eyeSize;
-    } else {
-      pupilX = this.props.mouseX - this.state.circleX + this.props.eyeSize / 2;
-    }
-    console.log("pupilX", pupilX);
-    return pupilX;
-  };
-
-  getPupilY = () => {
-    console.log("circleX", this.state.circleX);
-    let pupilY = this.props.eyeSize / 2;
-    if (this.props.mouseY > this.state.circleY + 0.15625 * this.props.eyeSize) {
-      pupilY = this.props.eyeSize / 2 + 0.15625 * this.props.eyeSize;
-    } else if (
-      this.props.mouseY <
-      this.state.circleY - 0.15625 * this.props.eyeSize
-    ) {
-      pupilY = this.props.eyeSize / 2 - 0.15625 * this.props.eyeSize;
-    } else {
-      pupilY = this.props.mouseY - this.state.circleY + this.props.eyeSize / 2;
-    }
-    console.log("pupilY", pupilY);
-    return pupilY;
   };
 
   render() {
@@ -128,8 +116,8 @@ class GooglyEyes extends Component {
         />
         <circle
           className="GooglyEyes"
-          cx={this.getPupilX()}
-          cy={this.getPupilY()}
+          cx={this.getPupilLoc().pupilX}
+          cy={this.getPupilLoc().pupilY}
           r={0.15625 * this.props.eyeSize}
           fill="#222222"
         />

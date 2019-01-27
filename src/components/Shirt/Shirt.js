@@ -6,7 +6,7 @@ class Shirt extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eyeSize: 100,
+      eyeSize: 160,
       mouseX: 0,
       mouseY: 0
     };
