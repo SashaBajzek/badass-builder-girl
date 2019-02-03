@@ -14,30 +14,33 @@ class GooglyEyes extends Component {
   refCallback = element => {
     if (element) {
       let size = element.getBoundingClientRect();
-      let circleY = (size.top + size.bottom) / 2;
       let circleX = (size.left + size.right) / 2;
+      let circleY = (size.top + size.bottom) / 2;
       this.setState({ size, circleX, circleY });
     }
   };
 
   getPupilLoc = (mouseX, mouseY) => {
-    const { eyeSize } = this.props;
+    const { eyeSize, zeroX, zeroY } = this.props;
     const { circleX, circleY } = this.state;
+    const pupilRadius = 0.15625 * eyeSize;
     let pupilX = 80;
     let pupilY = 80;
+    mouseX = mouseX - zeroX - pupilRadius;
+    mouseY = mouseY - zeroY - pupilRadius;
     let distanceToMouse = Math.sqrt(
       Math.pow(mouseX - circleX, 2) + Math.pow(mouseY - circleY, 2)
     );
     let angle = Math.atan((circleY - mouseY) / (circleX - mouseX));
-    if (distanceToMouse <= 0.15625 * eyeSize) {
+    if (distanceToMouse <= pupilRadius) {
       pupilX = mouseX - circleX + eyeSize / 2;
       pupilY = mouseY - circleY + eyeSize / 2;
     } else if (mouseX <= circleX) {
-      pupilX = 0.5 * eyeSize - 0.15625 * eyeSize * Math.cos(angle);
-      pupilY = 0.5 * eyeSize - 0.15625 * eyeSize * Math.sin(angle);
+      pupilX = 0.5 * eyeSize - pupilRadius * Math.cos(angle);
+      pupilY = 0.5 * eyeSize - pupilRadius * Math.sin(angle);
     } else if (mouseX > circleX) {
-      pupilX = 0.5 * eyeSize + 0.15625 * eyeSize * Math.cos(angle);
-      pupilY = 0.5 * eyeSize + 0.15625 * eyeSize * Math.sin(angle);
+      pupilX = 0.5 * eyeSize + pupilRadius * Math.cos(angle);
+      pupilY = 0.5 * eyeSize + pupilRadius * Math.sin(angle);
     }
     return { pupilX, pupilY };
   };
