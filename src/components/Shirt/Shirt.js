@@ -15,12 +15,15 @@ class Shirt extends Component {
     const { eyeSize } = this.state;
     const { mouseX, mouseY } = this.props.mouseLocation;
     const { zeroX, zeroY } = this.props.originLocation;
+    const { windowHeight, windowWidth } = this.props.windowDimensions;
     return (
       <div className="Shirt">
         <h2>All Eyes On You</h2>
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -28,6 +31,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -35,6 +40,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -42,6 +49,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -49,6 +58,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -56,6 +67,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -63,6 +76,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -70,6 +85,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -77,6 +94,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -84,6 +103,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -91,6 +112,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -98,6 +121,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -105,6 +130,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -112,6 +139,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -119,6 +148,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -126,6 +157,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -133,6 +166,8 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}
@@ -140,6 +175,89 @@ class Shirt extends Component {
         <GooglyEyes
           mouseX={mouseX}
           mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          zeroX={zeroX}
+          zeroY={zeroY}
+          eyeSize={eyeSize}
+        />
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          zeroX={zeroX}
+          zeroY={zeroY}
+          eyeSize={eyeSize}
+        />
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          zeroX={zeroX}
+          zeroY={zeroY}
+          eyeSize={eyeSize}
+        />
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          zeroX={zeroX}
+          zeroY={zeroY}
+          eyeSize={eyeSize}
+        />
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          zeroX={zeroX}
+          zeroY={zeroY}
+          eyeSize={eyeSize}
+        />
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          zeroX={zeroX}
+          zeroY={zeroY}
+          eyeSize={eyeSize}
+        />
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          zeroX={zeroX}
+          zeroY={zeroY}
+          eyeSize={eyeSize}
+        />
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          zeroX={zeroX}
+          zeroY={zeroY}
+          eyeSize={eyeSize}
+        />
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          zeroX={zeroX}
+          zeroY={zeroY}
+          eyeSize={eyeSize}
+        />
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
           zeroX={zeroX}
           zeroY={zeroY}
           eyeSize={eyeSize}

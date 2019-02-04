@@ -2,7 +2,14 @@ import React from "react";
 
 function withMouseTouchLocation(Component, propName = "mouseLocation") {
   return class WithMouseTouchLocation extends React.Component {
-    state = { mouseX: 0, mouseY: 0, zeroX: 0, zeroY: 0 };
+    state = {
+      mouseX: 0,
+      mouseY: 0,
+      windowHeight: 0,
+      windowWidth: 0,
+      zeroX: 0,
+      zeroY: 0
+    };
 
     mouseMove = event =>
       this.setState({
@@ -25,10 +32,33 @@ function withMouseTouchLocation(Component, propName = "mouseLocation") {
       }
     };
 
+    updateDimensions = () => {
+      this.setState({
+        windowHeight: window.innerHeight,
+        windowWidth: window.innerWidth
+      });
+    };
+
+    componentWillMount() {
+      this.updateDimensions();
+    }
+
+    componentDidMount() {
+      window.addEventListener("resize", this.updateDimensions);
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener("resize", this.updateDimensions);
+    }
+
     render() {
       const props = {
         [propName]: { mouseX: this.state.mouseX, mouseY: this.state.mouseY },
         originLocation: { zeroX: this.state.zeroX, zeroY: this.state.zeroY },
+        windowDimensions: {
+          windowHeight: this.state.windowHeight,
+          windowWidth: this.state.windowWidth
+        },
         ...this.props
       };
 

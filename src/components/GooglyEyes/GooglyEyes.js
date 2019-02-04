@@ -9,11 +9,17 @@ class GooglyEyes extends Component {
       circleY: null,
       size: {}
     };
+    this.element = null;
   }
 
   refCallback = element => {
-    if (element) {
-      let size = element.getBoundingClientRect();
+    this.element = element;
+    this.checkCircleLocation();
+  };
+
+  checkCircleLocation = () => {
+    if (this.element) {
+      let size = this.element.getBoundingClientRect();
       let circleX = (size.left + size.right) / 2;
       let circleY = (size.top + size.bottom) / 2;
       this.setState({ size, circleX, circleY });
@@ -48,6 +54,12 @@ class GooglyEyes extends Component {
   // shouldComponentUpdate(nextProps, nextState) {
   //   let prevLocation = this.getPupilLoc(this.props.mouseX, this.props.mouseY);
   //   let nextLocation = this.getPupilLoc(nextProps.mouseX, nextProps.mouseY);
+
+  //   let size = this.element.getBoundingClientRect();
+  //   let circleX = (size.left + size.right) / 2;
+  //   let circleY = (size.top + size.bottom) / 2;
+  //   this.setState({ size, circleX, circleY });
+
   //   let diff = Math.abs(
   //     Math.sqrt(
   //       Math.pow(prevLocation.pupilX - nextLocation.pupilX, 2) +
@@ -61,6 +73,28 @@ class GooglyEyes extends Component {
   //     return false;
   //   }
   // }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.windowWidth !== nextProps.windowWidth ||
+      this.props.windowHeight !== nextProps.windowHeight ||
+      this.props.mouseX !== nextProps.mouseX ||
+      this.props.mouseY !== nextProps.mouseY
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      this.props.windowWidth !== prevProps.windowWidth ||
+      this.props.windowHeight !== prevProps.windowHeight
+    ) {
+      this.checkCircleLocation();
+    }
+  }
 
   render() {
     const { eyeSize, mouseX, mouseY } = this.props;
