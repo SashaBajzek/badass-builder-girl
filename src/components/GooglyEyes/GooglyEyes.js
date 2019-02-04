@@ -7,6 +7,8 @@ class GooglyEyes extends Component {
     this.state = {
       circleX: null,
       circleY: null,
+      pupilX: null,
+      pupilY: null,
       size: {}
     };
     this.element = null;
@@ -26,27 +28,36 @@ class GooglyEyes extends Component {
     }
   };
 
-  getPupilLoc = (mouseX, mouseY) => {
-    const { eyeSize } = this.props;
+  getPupilLoc = () => {
+    const { eyeSize, mouseX, mouseY } = this.props;
     const { circleX, circleY } = this.state;
     const pupilRadius = 0.15625 * eyeSize;
-    let pupilX = 0;
-    let pupilY = 0;
     let distanceToMouse = Math.sqrt(
       Math.pow(mouseX - circleX, 2) + Math.pow(mouseY - circleY, 2)
     );
     let angle = Math.atan((circleY - mouseY) / (circleX - mouseX));
-    if (distanceToMouse <= pupilRadius) {
-      pupilX = mouseX - circleX + eyeSize / 2;
-      pupilY = mouseY - circleY + eyeSize / 2;
+    if (!circleX && !circleY) {
+      // Center eyes on inital load
+      this.setState({
+        pupilX: window.innerWidth / 10 / 2,
+        pupilY: window.innerWidth / 10 / 2
+      });
+    } else if (distanceToMouse <= pupilRadius) {
+      this.setState({
+        pupilX: mouseX - circleX + eyeSize / 2,
+        pupilY: mouseY - circleY + eyeSize / 2
+      });
     } else if (mouseX <= circleX) {
-      pupilX = 0.5 * eyeSize - pupilRadius * Math.cos(angle);
-      pupilY = 0.5 * eyeSize - pupilRadius * Math.sin(angle);
+      this.setState({
+        pupilX: 0.5 * eyeSize - pupilRadius * Math.cos(angle),
+        pupilY: 0.5 * eyeSize - pupilRadius * Math.sin(angle)
+      });
     } else if (mouseX > circleX) {
-      pupilX = 0.5 * eyeSize + pupilRadius * Math.cos(angle);
-      pupilY = 0.5 * eyeSize + pupilRadius * Math.sin(angle);
+      this.setState({
+        pupilX: 0.5 * eyeSize + pupilRadius * Math.cos(angle),
+        pupilY: 0.5 * eyeSize + pupilRadius * Math.sin(angle)
+      });
     }
-    return { pupilX, pupilY };
   };
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -72,6 +83,10 @@ class GooglyEyes extends Component {
   //   }
   // }
 
+  componentDidMount() {
+    this.getPupilLoc();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.windowWidth !== nextProps.windowWidth ||
@@ -93,11 +108,18 @@ class GooglyEyes extends Component {
       this.props.eyeSize !== prevProps.eyeSize
     ) {
       this.checkCircleLocation();
+      this.getPupilLoc();
+    } else if (
+      this.props.mouseX !== prevProps.mouseX ||
+      this.props.mouseY !== prevProps.mouseY
+    ) {
+      this.getPupilLoc();
     }
   }
 
   render() {
-    const { eyeSize, mouseX, mouseY } = this.props;
+    const { eyeSize } = this.props;
+    const { pupilX, pupilY } = this.state;
     console.log("GooglyEye render");
     return (
       <svg
@@ -162,12 +184,7 @@ class GooglyEyes extends Component {
           fill="#ffffff"
           filter="url(#GooglyEyes)"
         />
-        <circle
-          cx={this.getPupilLoc(mouseX, mouseY).pupilX}
-          cy={this.getPupilLoc(mouseX, mouseY).pupilY}
-          r={0.15625 * eyeSize}
-          fill="#222222"
-        />
+        <circle cx={pupilX} cy={pupilY} r={0.15625 * eyeSize} fill="#222222" />
       </svg>
     );
   }

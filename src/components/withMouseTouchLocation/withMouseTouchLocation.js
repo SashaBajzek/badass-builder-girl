@@ -62,6 +62,7 @@ function withMouseTouchLocation(Component, propName = "mouseLocation") {
       return (
         <div
           onMouseMove={this.mouseMove}
+          onTouchStart={this.touchMove}
           onTouchMove={this.touchMove}
           ref={this.refCallback}
         >
