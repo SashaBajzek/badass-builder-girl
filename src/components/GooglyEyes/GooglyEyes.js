@@ -27,13 +27,11 @@ class GooglyEyes extends Component {
   };
 
   getPupilLoc = (mouseX, mouseY) => {
-    const { eyeSize, zeroX, zeroY } = this.props;
+    const { eyeSize } = this.props;
     const { circleX, circleY } = this.state;
     const pupilRadius = 0.15625 * eyeSize;
-    let pupilX = 80;
-    let pupilY = 80;
-    mouseX = mouseX - zeroX - pupilRadius;
-    mouseY = mouseY - zeroY - pupilRadius;
+    let pupilX = 0;
+    let pupilY = 0;
     let distanceToMouse = Math.sqrt(
       Math.pow(mouseX - circleX, 2) + Math.pow(mouseY - circleY, 2)
     );
@@ -79,7 +77,8 @@ class GooglyEyes extends Component {
       this.props.windowWidth !== nextProps.windowWidth ||
       this.props.windowHeight !== nextProps.windowHeight ||
       this.props.mouseX !== nextProps.mouseX ||
-      this.props.mouseY !== nextProps.mouseY
+      this.props.mouseY !== nextProps.mouseY ||
+      this.props.eyeSize !== nextProps.eyeSize
     ) {
       return true;
     } else {
@@ -90,7 +89,8 @@ class GooglyEyes extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (
       this.props.windowWidth !== prevProps.windowWidth ||
-      this.props.windowHeight !== prevProps.windowHeight
+      this.props.windowHeight !== prevProps.windowHeight ||
+      this.props.eyeSize !== prevProps.eyeSize
     ) {
       this.checkCircleLocation();
     }
@@ -98,6 +98,7 @@ class GooglyEyes extends Component {
 
   render() {
     const { eyeSize, mouseX, mouseY } = this.props;
+    console.log("GooglyEye render");
     return (
       <svg
         width={eyeSize}
@@ -106,7 +107,7 @@ class GooglyEyes extends Component {
         className="GooglyEyes"
       >
         <defs>
-          <filter id="GooglyEyess">
+          <filter id="GooglyEyes">
             <feGaussianBlur stdDeviation="3" result="blur4" />
             <feSpecularLighting
               result="light"
@@ -159,7 +160,7 @@ class GooglyEyes extends Component {
           cy={eyeSize / 2}
           r={0.3125 * eyeSize}
           fill="#ffffff"
-          filter="url(#GooglyEyess)"
+          filter="url(#GooglyEyes)"
         />
         <circle
           cx={this.getPupilLoc(mouseX, mouseY).pupilX}

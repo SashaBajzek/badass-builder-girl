@@ -1,5 +1,9 @@
 .App {
   background-color: black;
+
+  &__img {
+    height: 200px;
+  }
 }
 
 .header {
