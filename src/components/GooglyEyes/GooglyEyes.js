@@ -39,6 +39,7 @@ class GooglyEyes extends Component {
     if (!circleX && !circleY) {
       // Center eyes on inital load
       this.setState({
+        // This #12 is hardcoded!  See Shirt component newEyeSize divisor
         pupilX: window.innerWidth / 12 / 2,
         pupilY: window.innerWidth / 12 / 2
       });
