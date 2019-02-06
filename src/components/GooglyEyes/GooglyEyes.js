@@ -39,8 +39,8 @@ class GooglyEyes extends Component {
     if (!circleX && !circleY) {
       // Center eyes on inital load
       this.setState({
-        pupilX: window.innerWidth / 10 / 2,
-        pupilY: window.innerWidth / 10 / 2
+        pupilX: window.innerWidth / 12 / 2,
+        pupilY: window.innerWidth / 12 / 2
       });
     } else if (distanceToMouse <= pupilRadius) {
       this.setState({

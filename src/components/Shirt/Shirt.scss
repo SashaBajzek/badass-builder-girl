@@ -1,9 +1,16 @@
 .Shirt {
+  position: relative;
+
   h2 {
     color: gold;
     font-family: "Dosis", sans-serif;
   }
   :hover {
     cursor: pointer;
+  }
+
+  .GooglyEyes {
+    &:nth-of-type(1) {
+    }
   }
 }
