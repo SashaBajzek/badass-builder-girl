@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Footer from "../Footer/Footer";
 import Shirt from "../Shirt/Shirt";
 import "./App.scss";
 
@@ -18,6 +19,7 @@ class App extends Component {
         1080w"
         />
         <Shirt />
+        <Footer />
       </div>
     );
   }
