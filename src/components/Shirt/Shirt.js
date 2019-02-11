@@ -31,534 +31,87 @@ class Shirt extends Component {
     }
   }
 
-  render() {
+  createEyeRow = (keyName, numEyes) => {
     const { eyeSize } = this.state;
     const { mouseX, mouseY } = this.props.mouseLocation;
     const { windowHeight, windowWidth } = this.props.windowDimensions;
+    let eyes = [];
+    for (let i = 0; i < numEyes; i++) {
+      eyes.push(
+        <GooglyEyes
+          mouseX={mouseX}
+          mouseY={mouseY}
+          windowHeight={windowHeight}
+          windowWidth={windowWidth}
+          eyeSize={eyeSize}
+          key={keyName + "_" + i}
+        />
+      );
+    }
+    return eyes;
+  };
+
+  createBlankRow = (keyName, numBlanks) => {
+    const { eyeSize } = this.state;
+    let blanks = [];
+    for (let i = 0; i < numBlanks; i++) {
+      blanks.push(<GooglyEyeBlank eyeSize={eyeSize} key={keyName + "_" + i} />);
+    }
+    return blanks;
+  };
+
+  render() {
     return (
       <div className="Shirt">
         <h2>All Eyes On You</h2>
         <div className="Shirt__row Shirt__row--1">
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
+          {this.createBlankRow("row-1-a", 2)}
+          {this.createEyeRow("row-1-b", 3)}
+          {this.createBlankRow("row-1-c", 2)}
+          {this.createEyeRow("row-1-d", 3)}
+          {this.createBlankRow("row-1-e", 2)}
         </div>
         <div className="Shirt__row Shirt__row--2">
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
+          {this.createBlankRow("row-2-a", 1)}
+          {this.createEyeRow("row-2-b", 10)}
+          {this.createBlankRow("row-2-c", 1)}
         </div>
         <div className="Shirt__row Shirt__row--3">
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
+          {this.createEyeRow("row-3", 12)}
         </div>
         <div className="Shirt__row Shirt__row--4">
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
+          {this.createBlankRow("row-4-a", 1)}
+          {this.createEyeRow("row-4-b", 1)}
+          {this.createBlankRow("row-4-c", 1)}
+          {this.createEyeRow("row-4-d", 6)}
+          {this.createBlankRow("row-4-e", 1)}
+          {this.createEyeRow("row-4-f", 1)}
+          {this.createBlankRow("row-4-g", 1)}
         </div>
         <div className="Shirt__row Shirt__row--5">
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
+          {this.createBlankRow("row-5-a", 3)}
+          {this.createEyeRow("row-5-b", 6)}
+          {this.createBlankRow("row-5-c", 3)}
         </div>
         <div className="Shirt__row  Shirt__row--6">
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
+          {this.createBlankRow("row-6-a", 3)}
+          {this.createEyeRow("row-6-b", 6)}
+          {this.createBlankRow("row-6-c", 3)}
         </div>
         <div className="Shirt__row  Shirt__row--7">
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
+          {this.createBlankRow("row-7-a", 3)}
+          {this.createEyeRow("row-7-b", 6)}
+          {this.createBlankRow("row-7-c", 3)}
         </div>
         <div className="Shirt__row  Shirt__row--8">
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
+          {this.createBlankRow("row-8-a", 3)}
+          {this.createEyeRow("row-8-b", 6)}
+          {this.createBlankRow("row-8-c", 3)}
         </div>
         <div className="Shirt__row  Shirt__row--9">
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyes
-            mouseX={mouseX}
-            mouseY={mouseY}
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            eyeSize={eyeSize}
-          />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
-          <GooglyEyeBlank eyeSize={eyeSize} />
+          {this.createBlankRow("row-9-a", 3)}
+          {this.createEyeRow("row-9-b", 6)}
+          {this.createBlankRow("row-9-c", 3)}
         </div>
       </div>
     );
