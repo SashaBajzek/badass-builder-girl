@@ -118,8 +118,85 @@ class GooglyEyes extends Component {
     }
   }
 
-  render() {
+  getLeft = () => {
     const { eyeSize } = this.props;
+    return (
+      <circle
+        cx={0.09375 * eyeSize}
+        cy={eyeSize / 2}
+        r={0.09375 * eyeSize}
+        strokeWidth={0.0625 * eyeSize}
+        stroke="#aaaaaa"
+      />
+    );
+  };
+
+  getRight = () => {
+    const { eyeSize } = this.props;
+    return (
+      <circle
+        cx={0.90625 * eyeSize}
+        cy={eyeSize / 2}
+        r={0.09375 * eyeSize}
+        strokeWidth={0.0625 * eyeSize}
+        stroke="#aaaaaa"
+      />
+    );
+  };
+
+  getBottom = () => {
+    const { eyeSize } = this.props;
+    return (
+      <circle
+        cx={eyeSize / 2}
+        cy={0.90625 * eyeSize}
+        r={0.09375 * eyeSize}
+        strokeWidth={0.0625 * eyeSize}
+        stroke="#aaaaaa"
+      />
+    );
+  };
+
+  getTop = () => {
+    const { eyeSize } = this.props;
+    return (
+      <circle
+        cx={eyeSize / 2}
+        cy={0.09375 * eyeSize}
+        r={0.09375 * eyeSize}
+        strokeWidth={0.0625 * eyeSize}
+        stroke="#aaaaaa"
+      />
+    );
+  };
+
+  getRings = position => {
+    let rings = [];
+    if (position.includes("top")) {
+      rings.push(this.getTop());
+    }
+    if (position.includes("bottom")) {
+      rings.push(this.getBottom());
+    }
+    if (position.includes("left")) {
+      rings.push(this.getLeft());
+    }
+    if (position.includes("right")) {
+      rings.push(this.getRight());
+    }
+    if (position.includes("all")) {
+      rings.push(
+        this.getLeft(),
+        this.getBottom(),
+        this.getTop(),
+        this.getRight()
+      );
+    }
+    return rings;
+  };
+
+  render() {
+    const { eyeSize, position } = this.props;
     const { pupilX, pupilY } = this.state;
     console.log("GooglyEye render");
     return (
@@ -143,34 +220,7 @@ class GooglyEyes extends Component {
             <feComposite in="light" in2="blur4" operator="in" result="lit" />
           </filter>
         </defs>
-        <circle
-          cx={0.09375 * eyeSize}
-          cy={eyeSize / 2}
-          r={0.09375 * eyeSize}
-          strokeWidth={0.0625 * eyeSize}
-          stroke="#aaaaaa"
-        />
-        <circle
-          cx={0.90625 * eyeSize}
-          cy={eyeSize / 2}
-          r={0.09375 * eyeSize}
-          strokeWidth={0.0625 * eyeSize}
-          stroke="#aaaaaa"
-        />
-        <circle
-          cx={eyeSize / 2}
-          cy={0.90625 * eyeSize}
-          r={0.09375 * eyeSize}
-          strokeWidth={0.0625 * eyeSize}
-          stroke="#aaaaaa"
-        />
-        <circle
-          cx={eyeSize / 2}
-          cy={0.09375 * eyeSize}
-          r={0.09375 * eyeSize}
-          strokeWidth={0.0625 * eyeSize}
-          stroke="#aaaaaa"
-        />
+        {this.getRings(position)}
         <circle
           cx={eyeSize / 2}
           cy={eyeSize / 2}

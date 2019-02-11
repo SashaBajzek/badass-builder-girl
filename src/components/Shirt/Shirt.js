@@ -31,7 +31,7 @@ class Shirt extends Component {
     }
   }
 
-  createEyeRow = (keyName, numEyes) => {
+  createEyeRow = (keyName, position, numEyes) => {
     const { eyeSize } = this.state;
     const { mouseX, mouseY } = this.props.mouseLocation;
     const { windowHeight, windowWidth } = this.props.windowDimensions;
@@ -44,6 +44,7 @@ class Shirt extends Component {
           windowHeight={windowHeight}
           windowWidth={windowWidth}
           eyeSize={eyeSize}
+          position={position}
           key={keyName + "_" + i}
         />
       );
@@ -66,52 +67,74 @@ class Shirt extends Component {
         <h2>All Eyes On You</h2>
         <div className="Shirt__row Shirt__row--1">
           {this.createBlankRow("row-1-a", 2)}
-          {this.createEyeRow("row-1-b", 3)}
-          {this.createBlankRow("row-1-c", 2)}
-          {this.createEyeRow("row-1-d", 3)}
-          {this.createBlankRow("row-1-e", 2)}
+          {this.createEyeRow("row-1-b", ["right", "bottom"], 1)}
+          {this.createEyeRow("row-1-c", ["right", "bottom", "left"], 1)}
+          {this.createEyeRow("row-1-d", ["bottom", "left"], 1)}
+          {this.createBlankRow("row-e-c", 2)}
+          {this.createEyeRow("row-1-d", ["right", "bottom"], 1)}
+          {this.createEyeRow("row-1-e", ["right", "bottom", "left"], 1)}
+          {this.createEyeRow("row-1-f", ["bottom", "left"], 1)}
+          {this.createBlankRow("row-1-i", 2)}
         </div>
         <div className="Shirt__row Shirt__row--2">
           {this.createBlankRow("row-2-a", 1)}
-          {this.createEyeRow("row-2-b", 10)}
-          {this.createBlankRow("row-2-c", 1)}
+          {this.createEyeRow("row-2-b", ["right", "bottom"], 1)}
+          {this.createEyeRow("row-2-c", ["all"], 3)}
+          {this.createEyeRow("row-2-d", ["right", "bottom", "left"], 2)}
+          {this.createEyeRow("row-2-e", ["all"], 3)}
+          {this.createEyeRow("row-2-f", ["left", "bottom"], 1)}
+          {this.createBlankRow("row-2-g", 1)}
         </div>
         <div className="Shirt__row Shirt__row--3">
-          {this.createEyeRow("row-3", 12)}
+          {this.createEyeRow("row-3-a", ["right", "bottom"], 1)}
+          {this.createEyeRow("row-3-b", ["all"], 10)}
+          {this.createEyeRow("row-3-c", ["left", "bottom"], 1)}
         </div>
         <div className="Shirt__row Shirt__row--4">
           {this.createBlankRow("row-4-a", 1)}
-          {this.createEyeRow("row-4-b", 1)}
+          {this.createEyeRow("row-4-b", ["top", "left"], 1)}
           {this.createBlankRow("row-4-c", 1)}
-          {this.createEyeRow("row-4-d", 6)}
-          {this.createBlankRow("row-4-e", 1)}
-          {this.createEyeRow("row-4-f", 1)}
+          {this.createEyeRow("row-4-d", ["top", "bottom", "right"], 1)}
+          {this.createEyeRow("row-4-e", ["all"], 4)}
+          {this.createEyeRow("row-4-f", ["top", "bottom", "left"], 1)}
           {this.createBlankRow("row-4-g", 1)}
+          {this.createEyeRow("row-4-h", ["top", "right"], 1)}
+          {this.createBlankRow("row-4-i", 1)}
         </div>
         <div className="Shirt__row Shirt__row--5">
           {this.createBlankRow("row-5-a", 3)}
-          {this.createEyeRow("row-5-b", 6)}
-          {this.createBlankRow("row-5-c", 3)}
+          {this.createEyeRow("row-5-b", ["top", "bottom", "right"], 1)}
+          {this.createEyeRow("row-5-c", ["all"], 4)}
+          {this.createEyeRow("row-5-d", ["top", "bottom", "left"], 1)}
+          {this.createBlankRow("row-5-e", 3)}
         </div>
         <div className="Shirt__row  Shirt__row--6">
           {this.createBlankRow("row-6-a", 3)}
-          {this.createEyeRow("row-6-b", 6)}
-          {this.createBlankRow("row-6-c", 3)}
+          {this.createEyeRow("row-6-b", ["top", "bottom", "right"], 1)}
+          {this.createEyeRow("row-6-c", ["all"], 4)}
+          {this.createEyeRow("row-6-d", ["top", "bottom", "left"], 1)}
+          {this.createBlankRow("row-6-e", 3)}
         </div>
         <div className="Shirt__row  Shirt__row--7">
           {this.createBlankRow("row-7-a", 3)}
-          {this.createEyeRow("row-7-b", 6)}
-          {this.createBlankRow("row-7-c", 3)}
+          {this.createEyeRow("row-7-b", ["top", "bottom", "right"], 1)}
+          {this.createEyeRow("row-7-c", ["all"], 4)}
+          {this.createEyeRow("row-7-d", ["top", "bottom", "left"], 1)}
+          {this.createBlankRow("row-7-e", 3)}
         </div>
         <div className="Shirt__row  Shirt__row--8">
           {this.createBlankRow("row-8-a", 3)}
-          {this.createEyeRow("row-8-b", 6)}
-          {this.createBlankRow("row-8-c", 3)}
+          {this.createEyeRow("row-8-b", ["top", "bottom", "right"], 1)}
+          {this.createEyeRow("row-8-c", ["all"], 4)}
+          {this.createEyeRow("row-8-d", ["top", "bottom", "left"], 1)}
+          {this.createBlankRow("row-8-e", 3)}
         </div>
         <div className="Shirt__row  Shirt__row--9">
           {this.createBlankRow("row-9-a", 3)}
-          {this.createEyeRow("row-9-b", 6)}
-          {this.createBlankRow("row-9-c", 3)}
+          {this.createEyeRow("row-9-b", ["top", "right"], 1)}
+          {this.createEyeRow("row-9-c", ["top", "left", "right"], 4)}
+          {this.createEyeRow("row-9-d", ["top", "left"], 1)}
+          {this.createBlankRow("row-9-e", 3)}
         </div>
       </div>
     );
