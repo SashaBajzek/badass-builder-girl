@@ -122,6 +122,7 @@ class GooglyEyes extends Component {
     const { eyeSize } = this.props;
     return (
       <circle
+        key="left"
         cx={0.09375 * eyeSize}
         cy={eyeSize / 2}
         r={0.09375 * eyeSize}
@@ -135,6 +136,7 @@ class GooglyEyes extends Component {
     const { eyeSize } = this.props;
     return (
       <circle
+        key="right"
         cx={0.90625 * eyeSize}
         cy={eyeSize / 2}
         r={0.09375 * eyeSize}
@@ -148,6 +150,7 @@ class GooglyEyes extends Component {
     const { eyeSize } = this.props;
     return (
       <circle
+        key="bottom"
         cx={eyeSize / 2}
         cy={0.90625 * eyeSize}
         r={0.09375 * eyeSize}
@@ -161,6 +164,7 @@ class GooglyEyes extends Component {
     const { eyeSize } = this.props;
     return (
       <circle
+        key="top"
         cx={eyeSize / 2}
         cy={0.09375 * eyeSize}
         r={0.09375 * eyeSize}
@@ -198,7 +202,6 @@ class GooglyEyes extends Component {
   render() {
     const { eyeSize, position } = this.props;
     const { pupilX, pupilY } = this.state;
-    console.log("GooglyEye render");
     return (
       <svg
         width={eyeSize}

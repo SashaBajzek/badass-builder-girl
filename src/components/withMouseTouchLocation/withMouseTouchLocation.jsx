@@ -37,11 +37,10 @@ function withMouseTouchLocation(Component, propName = "mouseLocation") {
       });
     };
 
-    componentWillMount() {
-      this.updateDimensions();
-    }
-
+    // Window size is only known in the browser, so read it after mount
+    // (this also runs during the build-time prerender, where there's no window).
     componentDidMount() {
+      this.updateDimensions();
       window.addEventListener("resize", this.updateDimensions);
     }
 

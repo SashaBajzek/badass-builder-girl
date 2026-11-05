@@ -17,7 +17,6 @@ class Shirt extends Component {
   }
 
   updateEyeSize = () => {
-    console.log("updateEyeSize");
     let newEyeSize = this.props.windowDimensions.windowWidth / 12;
     this.setState({ eyeSize: newEyeSize });
   };
@@ -71,9 +70,9 @@ class Shirt extends Component {
           {this.createEyeRow("row-1-c", ["right", "bottom", "left"], 1)}
           {this.createEyeRow("row-1-d", ["bottom", "left"], 1)}
           {this.createBlankRow("row-e-c", 2)}
-          {this.createEyeRow("row-1-d", ["right", "bottom"], 1)}
-          {this.createEyeRow("row-1-e", ["right", "bottom", "left"], 1)}
-          {this.createEyeRow("row-1-f", ["bottom", "left"], 1)}
+          {this.createEyeRow("row-1-g", ["right", "bottom"], 1)}
+          {this.createEyeRow("row-1-h", ["right", "bottom", "left"], 1)}
+          {this.createEyeRow("row-1-j", ["bottom", "left"], 1)}
           {this.createBlankRow("row-1-i", 2)}
         </div>
         <div className="Shirt__row Shirt__row--2">
