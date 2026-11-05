@@ -1,2 +1,12 @@
 .GooglyEyes {
+  // Inline SVGs sit on the text baseline, which left a gap under every row.
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.GooglyEyes__defs {
+  height: 0;
+  position: absolute;
+  width: 0;
 }

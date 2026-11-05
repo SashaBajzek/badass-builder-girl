@@ -1,145 +1,111 @@
-import React, { Component } from "react";
+import React, { useEffect, useRef } from "react";
 import "./Shirt.scss";
-import GooglyEyes from "../GooglyEyes/GooglyEyes";
-import GooglyEyeBlank from "../GooglyEyes/GooglyEyeBlank";
-import withMouseTouchLocation from "../withMouseTouchLocation/withMouseTouchLocation";
+import GooglyEyes, {
+  EYE_SIZE,
+  GooglyEyesDefs,
+  PUPIL_RADIUS
+} from "../GooglyEyes/GooglyEyes";
 
-class Shirt extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      eyeSize: null
+const ALL = ["all"];
+
+// The shirt is a 12-column grid. Each row lists [count] for empty cells or
+// [count, ringSides] for eyes; every row adds up to 12 cells.
+const ROWS = [
+  [[2], [1, ["right", "bottom"]], [1, ["right", "bottom", "left"]], [1, ["bottom", "left"]], [2], [1, ["right", "bottom"]], [1, ["right", "bottom", "left"]], [1, ["bottom", "left"]], [2]],
+  [[1], [1, ["right", "bottom"]], [3, ALL], [2, ["right", "bottom", "left"]], [3, ALL], [1, ["left", "bottom"]], [1]],
+  [[1, ["right", "bottom"]], [10, ALL], [1, ["left", "bottom"]]],
+  [[1], [1, ["top", "left"]], [1], [1, ["top", "bottom", "right"]], [4, ALL], [1, ["top", "bottom", "left"]], [1], [1, ["top", "right"]], [1]],
+  [[3], [1, ["top", "bottom", "right"]], [4, ALL], [1, ["top", "bottom", "left"]], [3]],
+  [[3], [1, ["top", "bottom", "right"]], [4, ALL], [1, ["top", "bottom", "left"]], [3]],
+  [[3], [1, ["top", "bottom", "right"]], [4, ALL], [1, ["top", "bottom", "left"]], [3]],
+  [[3], [1, ["top", "bottom", "right"]], [4, ALL], [1, ["top", "bottom", "left"]], [3]],
+  [[3], [1, ["top", "right"]], [4, ["top", "left", "right"]], [1, ["top", "left"]], [3]]
+];
+
+const renderRow = row =>
+  row.flatMap(([count, sides]) =>
+    Array.from({ length: count }, () => sides)
+  ).map((sides, col) =>
+    sides ? (
+      <GooglyEyes position={sides} key={col} />
+    ) : (
+      <div className="Shirt__blank" key={col} />
+    )
+  );
+
+// Moves each pupil toward the pointer, up to PUPIL_RADIUS from the center.
+const lookAt = (pupils, pointer) => {
+  // Read every position before writing any, so the browser lays out once.
+  const rects = pupils.map(pupil => pupil.ownerSVGElement.getBoundingClientRect());
+  pupils.forEach((pupil, i) => {
+    const rect = rects[i];
+    const scale = EYE_SIZE / rect.width; // screen pixels -> SVG units
+    let dx = (pointer.x - (rect.left + rect.width / 2)) * scale;
+    let dy = (pointer.y - (rect.top + rect.height / 2)) * scale;
+    const distance = Math.hypot(dx, dy);
+    if (distance > PUPIL_RADIUS) {
+      dx *= PUPIL_RADIUS / distance;
+      dy *= PUPIL_RADIUS / distance;
+    }
+    // Skip eyes whose pupil didn't visibly move, so the browser doesn't repaint them.
+    const transform = `translate(${dx.toFixed(1)} ${dy.toFixed(1)})`;
+    if (pupil.getAttribute("transform") !== transform) {
+      pupil.setAttribute("transform", transform);
+    }
+  });
+};
+
+const Shirt = () => {
+  const shirtRef = useRef(null);
+
+  // Pupils are moved directly on the DOM, at most once per frame, instead of
+  // re-rendering every eye through React on every mouse event.
+  useEffect(() => {
+    const pupils = Array.from(shirtRef.current.querySelectorAll(".GooglyEyes__pupil"));
+    let pointer = null;
+    let frame = null;
+
+    const update = () => {
+      frame = null;
+      if (pointer) lookAt(pupils, pointer);
     };
-  }
+    const scheduleUpdate = () => {
+      if (frame === null) frame = requestAnimationFrame(update);
+    };
+    const onPointerMove = event => {
+      const point = event.touches ? event.touches[0] : event;
+      pointer = { x: point.clientX, y: point.clientY };
+      scheduleUpdate();
+    };
 
-  componentDidMount() {
-    this.updateEyeSize();
-  }
+    const options = { passive: true };
+    window.addEventListener("mousemove", onPointerMove, options);
+    window.addEventListener("touchstart", onPointerMove, options);
+    window.addEventListener("touchmove", onPointerMove, options);
+    // The eyes move under a still pointer when the page scrolls or resizes.
+    window.addEventListener("scroll", scheduleUpdate, options);
+    window.addEventListener("resize", scheduleUpdate, options);
+    return () => {
+      window.removeEventListener("mousemove", onPointerMove, options);
+      window.removeEventListener("touchstart", onPointerMove, options);
+      window.removeEventListener("touchmove", onPointerMove, options);
+      window.removeEventListener("scroll", scheduleUpdate, options);
+      window.removeEventListener("resize", scheduleUpdate, options);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
+  }, []);
 
-  updateEyeSize = () => {
-    let newEyeSize = this.props.windowDimensions.windowWidth / 12;
-    this.setState({ eyeSize: newEyeSize });
-  };
+  return (
+    <div className="Shirt" ref={shirtRef}>
+      <GooglyEyesDefs />
+      <h2>All Eyes On You</h2>
+      {ROWS.map((row, i) => (
+        <div className="Shirt__row" key={i}>
+          {renderRow(row)}
+        </div>
+      ))}
+    </div>
+  );
+};
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.props.windowDimensions.windowWidth !==
-      prevProps.windowDimensions.windowWidth
-    ) {
-      this.updateEyeSize();
-    }
-  }
-
-  createEyeRow = (keyName, position, numEyes) => {
-    const { eyeSize } = this.state;
-    const { mouseX, mouseY } = this.props.mouseLocation;
-    const { windowHeight, windowWidth } = this.props.windowDimensions;
-    let eyes = [];
-    for (let i = 0; i < numEyes; i++) {
-      eyes.push(
-        <GooglyEyes
-          mouseX={mouseX}
-          mouseY={mouseY}
-          windowHeight={windowHeight}
-          windowWidth={windowWidth}
-          eyeSize={eyeSize}
-          position={position}
-          key={keyName + "_" + i}
-        />
-      );
-    }
-    return eyes;
-  };
-
-  createBlankRow = (keyName, numBlanks) => {
-    const { eyeSize } = this.state;
-    let blanks = [];
-    for (let i = 0; i < numBlanks; i++) {
-      blanks.push(<GooglyEyeBlank eyeSize={eyeSize} key={keyName + "_" + i} />);
-    }
-    return blanks;
-  };
-
-  render() {
-    return (
-      <div className="Shirt">
-        <h2>All Eyes On You</h2>
-        <div className="Shirt__row Shirt__row--1">
-          {this.createBlankRow("row-1-a", 2)}
-          {this.createEyeRow("row-1-b", ["right", "bottom"], 1)}
-          {this.createEyeRow("row-1-c", ["right", "bottom", "left"], 1)}
-          {this.createEyeRow("row-1-d", ["bottom", "left"], 1)}
-          {this.createBlankRow("row-e-c", 2)}
-          {this.createEyeRow("row-1-g", ["right", "bottom"], 1)}
-          {this.createEyeRow("row-1-h", ["right", "bottom", "left"], 1)}
-          {this.createEyeRow("row-1-j", ["bottom", "left"], 1)}
-          {this.createBlankRow("row-1-i", 2)}
-        </div>
-        <div className="Shirt__row Shirt__row--2">
-          {this.createBlankRow("row-2-a", 1)}
-          {this.createEyeRow("row-2-b", ["right", "bottom"], 1)}
-          {this.createEyeRow("row-2-c", ["all"], 3)}
-          {this.createEyeRow("row-2-d", ["right", "bottom", "left"], 2)}
-          {this.createEyeRow("row-2-e", ["all"], 3)}
-          {this.createEyeRow("row-2-f", ["left", "bottom"], 1)}
-          {this.createBlankRow("row-2-g", 1)}
-        </div>
-        <div className="Shirt__row Shirt__row--3">
-          {this.createEyeRow("row-3-a", ["right", "bottom"], 1)}
-          {this.createEyeRow("row-3-b", ["all"], 10)}
-          {this.createEyeRow("row-3-c", ["left", "bottom"], 1)}
-        </div>
-        <div className="Shirt__row Shirt__row--4">
-          {this.createBlankRow("row-4-a", 1)}
-          {this.createEyeRow("row-4-b", ["top", "left"], 1)}
-          {this.createBlankRow("row-4-c", 1)}
-          {this.createEyeRow("row-4-d", ["top", "bottom", "right"], 1)}
-          {this.createEyeRow("row-4-e", ["all"], 4)}
-          {this.createEyeRow("row-4-f", ["top", "bottom", "left"], 1)}
-          {this.createBlankRow("row-4-g", 1)}
-          {this.createEyeRow("row-4-h", ["top", "right"], 1)}
-          {this.createBlankRow("row-4-i", 1)}
-        </div>
-        <div className="Shirt__row Shirt__row--5">
-          {this.createBlankRow("row-5-a", 3)}
-          {this.createEyeRow("row-5-b", ["top", "bottom", "right"], 1)}
-          {this.createEyeRow("row-5-c", ["all"], 4)}
-          {this.createEyeRow("row-5-d", ["top", "bottom", "left"], 1)}
-          {this.createBlankRow("row-5-e", 3)}
-        </div>
-        <div className="Shirt__row  Shirt__row--6">
-          {this.createBlankRow("row-6-a", 3)}
-          {this.createEyeRow("row-6-b", ["top", "bottom", "right"], 1)}
-          {this.createEyeRow("row-6-c", ["all"], 4)}
-          {this.createEyeRow("row-6-d", ["top", "bottom", "left"], 1)}
-          {this.createBlankRow("row-6-e", 3)}
-        </div>
-        <div className="Shirt__row  Shirt__row--7">
-          {this.createBlankRow("row-7-a", 3)}
-          {this.createEyeRow("row-7-b", ["top", "bottom", "right"], 1)}
-          {this.createEyeRow("row-7-c", ["all"], 4)}
-          {this.createEyeRow("row-7-d", ["top", "bottom", "left"], 1)}
-          {this.createBlankRow("row-7-e", 3)}
-        </div>
-        <div className="Shirt__row  Shirt__row--8">
-          {this.createBlankRow("row-8-a", 3)}
-          {this.createEyeRow("row-8-b", ["top", "bottom", "right"], 1)}
-          {this.createEyeRow("row-8-c", ["all"], 4)}
-          {this.createEyeRow("row-8-d", ["top", "bottom", "left"], 1)}
-          {this.createBlankRow("row-8-e", 3)}
-        </div>
-        <div className="Shirt__row  Shirt__row--9">
-          {this.createBlankRow("row-9-a", 3)}
-          {this.createEyeRow("row-9-b", ["top", "right"], 1)}
-          {this.createEyeRow("row-9-c", ["top", "left", "right"], 4)}
-          {this.createEyeRow("row-9-d", ["top", "left"], 1)}
-          {this.createBlankRow("row-9-e", 3)}
-        </div>
-      </div>
-    );
-  }
-}
-
-const ShirtWithMouseTouchLocation = withMouseTouchLocation(Shirt);
-
-export default ShirtWithMouseTouchLocation;
+export default Shirt;

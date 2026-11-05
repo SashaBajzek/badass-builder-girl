@@ -1,247 +1,78 @@
-import React, { Component } from "react";
+import React from "react";
 import "./GooglyEyes.scss";
 
-class GooglyEyes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      circleX: null,
-      circleY: null,
-      pupilX: null,
-      pupilY: null,
-      size: {}
-    };
-    this.element = null;
-  }
+// Each eye is drawn on a 32x32 grid and scaled to its grid cell with CSS,
+// so the prerendered HTML already has the right size and layout.
+export const EYE_SIZE = 32;
+const CENTER = EYE_SIZE / 2;
+const EYE_RADIUS = 10;
+// Also the farthest the pupil's center can move from the eye's center.
+export const PUPIL_RADIUS = 5;
 
-  refCallback = element => {
-    this.element = element;
-    this.checkCircleLocation();
-  };
+// Rings that link an eye to its neighbors.
+const RING_CENTERS = {
+  top: [CENTER, 3],
+  bottom: [CENTER, 29],
+  left: [3, CENTER],
+  right: [29, CENTER]
+};
 
-  checkCircleLocation = () => {
-    if (this.element) {
-      let size = this.element.getBoundingClientRect();
-      let circleX = (size.left + size.right) / 2;
-      let circleY = (size.top + size.bottom) / 2;
-      this.setState({ size, circleX, circleY });
-    }
-  };
+// Shared gradient for the shiny eye white. Render once per page.
+// A gradient is far cheaper to paint than the blur + lighting filter it
+// replaces, which re-ran for every eye whenever a pupil moved.
+export const GooglyEyesDefs = () => (
+  <svg className="GooglyEyes__defs" aria-hidden="true">
+    <defs>
+      <radialGradient id="GooglyEyes__shine" cx="38%" cy="35%" r="70%">
+        <stop offset="0%" stopColor="#ffffff" />
+        <stop offset="45%" stopColor="#f4f4f4" />
+        <stop offset="100%" stopColor="#bdbdbd" />
+      </radialGradient>
+    </defs>
+  </svg>
+);
 
-  getPupilLoc = () => {
-    const { eyeSize, mouseX, mouseY } = this.props;
-    const { circleX, circleY } = this.state;
-    const pupilRadius = 0.15625 * eyeSize;
-    let distanceToMouse = Math.sqrt(
-      Math.pow(mouseX - circleX, 2) + Math.pow(mouseY - circleY, 2)
-    );
-    let angle = Math.atan((circleY - mouseY) / (circleX - mouseX));
-    if (!circleX && !circleY) {
-      // Center eyes on inital load
-      this.setState({
-        // This #12 is hardcoded!  See Shirt component newEyeSize divisor
-        pupilX: window.innerWidth / 12 / 2,
-        pupilY: window.innerWidth / 12 / 2
-      });
-    } else if (distanceToMouse <= pupilRadius) {
-      this.setState({
-        pupilX: mouseX - circleX + eyeSize / 2,
-        pupilY: mouseY - circleY + eyeSize / 2
-      });
-    } else if (mouseX <= circleX) {
-      this.setState({
-        pupilX: 0.5 * eyeSize - pupilRadius * Math.cos(angle),
-        pupilY: 0.5 * eyeSize - pupilRadius * Math.sin(angle)
-      });
-    } else if (mouseX > circleX) {
-      this.setState({
-        pupilX: 0.5 * eyeSize + pupilRadius * Math.cos(angle),
-        pupilY: 0.5 * eyeSize + pupilRadius * Math.sin(angle)
-      });
-    }
-  };
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   let prevLocation = this.getPupilLoc(this.props.mouseX, this.props.mouseY);
-  //   let nextLocation = this.getPupilLoc(nextProps.mouseX, nextProps.mouseY);
-
-  //   let size = this.element.getBoundingClientRect();
-  //   let circleX = (size.left + size.right) / 2;
-  //   let circleY = (size.top + size.bottom) / 2;
-  //   this.setState({ size, circleX, circleY });
-
-  //   let diff = Math.abs(
-  //     Math.sqrt(
-  //       Math.pow(prevLocation.pupilX - nextLocation.pupilX, 2) +
-  //         Math.pow(prevLocation.pupilY - nextLocation.pupilY, 2)
-  //     )
-  //   );
-  //   console.log("diff", diff);
-  //   if (diff > 0.25) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
-  componentDidMount() {
-    this.getPupilLoc();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      this.props.windowWidth !== nextProps.windowWidth ||
-      this.props.windowHeight !== nextProps.windowHeight ||
-      this.props.mouseX !== nextProps.mouseX ||
-      this.props.mouseY !== nextProps.mouseY ||
-      this.props.eyeSize !== nextProps.eyeSize
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.props.windowWidth !== prevProps.windowWidth ||
-      this.props.windowHeight !== prevProps.windowHeight ||
-      this.props.eyeSize !== prevProps.eyeSize
-    ) {
-      this.checkCircleLocation();
-      this.getPupilLoc();
-    } else if (
-      this.props.mouseX !== prevProps.mouseX ||
-      this.props.mouseY !== prevProps.mouseY
-    ) {
-      this.getPupilLoc();
-    }
-  }
-
-  getLeft = () => {
-    const { eyeSize } = this.props;
-    return (
-      <circle
-        key="left"
-        cx={0.09375 * eyeSize}
-        cy={eyeSize / 2}
-        r={0.09375 * eyeSize}
-        strokeWidth={0.0625 * eyeSize}
-        stroke="#aaaaaa"
-      />
-    );
-  };
-
-  getRight = () => {
-    const { eyeSize } = this.props;
-    return (
-      <circle
-        key="right"
-        cx={0.90625 * eyeSize}
-        cy={eyeSize / 2}
-        r={0.09375 * eyeSize}
-        strokeWidth={0.0625 * eyeSize}
-        stroke="#aaaaaa"
-      />
-    );
-  };
-
-  getBottom = () => {
-    const { eyeSize } = this.props;
-    return (
-      <circle
-        key="bottom"
-        cx={eyeSize / 2}
-        cy={0.90625 * eyeSize}
-        r={0.09375 * eyeSize}
-        strokeWidth={0.0625 * eyeSize}
-        stroke="#aaaaaa"
-      />
-    );
-  };
-
-  getTop = () => {
-    const { eyeSize } = this.props;
-    return (
-      <circle
-        key="top"
-        cx={eyeSize / 2}
-        cy={0.09375 * eyeSize}
-        r={0.09375 * eyeSize}
-        strokeWidth={0.0625 * eyeSize}
-        stroke="#aaaaaa"
-      />
-    );
-  };
-
-  getRings = position => {
-    let rings = [];
-    if (position.includes("top")) {
-      rings.push(this.getTop());
-    }
-    if (position.includes("bottom")) {
-      rings.push(this.getBottom());
-    }
-    if (position.includes("left")) {
-      rings.push(this.getLeft());
-    }
-    if (position.includes("right")) {
-      rings.push(this.getRight());
-    }
-    if (position.includes("all")) {
-      rings.push(
-        this.getLeft(),
-        this.getBottom(),
-        this.getTop(),
-        this.getRight()
-      );
-    }
-    return rings;
-  };
-
-  render() {
-    const { eyeSize, position } = this.props;
-    const { pupilX, pupilY } = this.state;
-    return (
-      <svg
-        width={eyeSize}
-        height={eyeSize}
-        ref={this.refCallback}
-        className="GooglyEyes"
-      >
-        <defs>
-          <filter id="GooglyEyes">
-            <feGaussianBlur stdDeviation="3" result="blur4" />
-            <feSpecularLighting
-              result="light"
-              in="blur4"
-              specularExponent="6"
-              lightingColor="#ffffff"
-            >
-              <fePointLight x="0" y="100" z="200" />
-            </feSpecularLighting>
-            <feComposite in="light" in2="blur4" operator="in" result="lit" />
-          </filter>
-        </defs>
-        {this.getRings(position)}
+const GooglyEyes = ({ position }) => {
+  const sides = position.includes("all") ? Object.keys(RING_CENTERS) : position;
+  return (
+    <svg className="GooglyEyes" viewBox={`0 0 ${EYE_SIZE} ${EYE_SIZE}`}>
+      {sides.map(side => (
         <circle
-          cx={eyeSize / 2}
-          cy={eyeSize / 2}
-          r={0.3125 * eyeSize}
-          strokeWidth="1"
-          stroke="#cccccc"
+          key={side}
+          cx={RING_CENTERS[side][0]}
+          cy={RING_CENTERS[side][1]}
+          r={3}
+          strokeWidth={2}
+          stroke="#aaaaaa"
         />
-        <circle
-          cx={eyeSize / 2}
-          cy={eyeSize / 2}
-          r={0.3125 * eyeSize}
-          fill="#ffffff"
-          filter="url(#GooglyEyes)"
-        />
-        <circle cx={pupilX} cy={pupilY} r={0.15625 * eyeSize} fill="#222222" />
-      </svg>
-    );
-  }
-}
+      ))}
+      {/* Soft glow around the eye */}
+      <circle
+        cx={CENTER}
+        cy={CENTER}
+        r={EYE_RADIUS + 0.4}
+        fill="none"
+        stroke="rgba(255, 255, 255, 0.3)"
+        strokeWidth={0.8}
+      />
+      <circle
+        cx={CENTER}
+        cy={CENTER}
+        r={EYE_RADIUS}
+        fill="url(#GooglyEyes__shine)"
+        stroke="#cccccc"
+        strokeWidth={0.25}
+      />
+      {/* Moved by Shirt with a transform; React never re-renders it. */}
+      <circle
+        className="GooglyEyes__pupil"
+        cx={CENTER}
+        cy={CENTER}
+        r={PUPIL_RADIUS}
+        fill="#222222"
+      />
+    </svg>
+  );
+};
 
 export default GooglyEyes;

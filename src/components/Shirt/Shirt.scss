@@ -8,9 +8,13 @@
   :hover {
     cursor: url("../Wrench/wrench.svg"), pointer;
   }
+}
 
-  .GooglyEyes {
-    &:nth-of-type(1) {
-    }
-  }
+.Shirt__row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.Shirt__blank {
+  aspect-ratio: 1;
 }
