@@ -1,8 +1,14 @@
 .App {
   background-color: black;
 
+  &__photo {
+    display: inline-block;
+  }
+
   &__img {
+    display: block;
     height: 200px;
+    width: auto;
   }
 }
 
