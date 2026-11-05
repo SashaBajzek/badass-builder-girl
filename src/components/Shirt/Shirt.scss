@@ -6,7 +6,8 @@
     font-family: "Dosis", sans-serif;
   }
   :hover {
-    cursor: url("../Wrench/wrench.svg"), pointer;
+    // Hotspot at the wrench's center (the image is 32x32), so the eyes look at the middle of the wrench.
+    cursor: url("../Wrench/wrench.svg") 16 16, pointer;
   }
 }
 
